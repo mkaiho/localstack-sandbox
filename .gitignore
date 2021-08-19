@@ -102,3 +102,13 @@ dist
 
 # TernJS port file
 .tern-port
+
+# localstack data
+docker/localstack/data/
+docker/localstack/.localstack
+docker/localstack/server.test.pem
+docker/localstack/server.test.pem.crt
+docker/localstack/server.test.pem.key
+
+# aws-cli
+.aws/
