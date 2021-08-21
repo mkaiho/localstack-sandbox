@@ -10,10 +10,27 @@ services:
       - "127.0.0.1:4566:4566"
       - "127.0.0.1:4571:4571"
     environment:
-      - SERVICES=s3
+      - SERVICES=${SERVICES- }
+      - DEBUG=${DEBUG- }
       - DATA_DIR=/tmp/localstack/data
+      - LAMBDA_EXECUTOR=${LAMBDA_EXECUTOR- }
+      - LOCALSTACK_API_KEY=${LOCALSTACK_API_KEY- }
+      - KINESIS_ERROR_PROBABILITY=${KINESIS_ERROR_PROBABILITY- }
+      - HOST_TMP_FOLDER=${TMPDIR}
     volumes:
       - "./docker/localstack:/tmp/localstack"
+    networks:
+      - localstack-network
+  terraform-cli:
+    build:
+      context: .
+      dockerfile: ./docker/terraform/Dockerfile
+    container_name: terraform-cli
+    tty: true
+    volumes:
+      - ./.aws:/root/.aws
+      - ./terraform:/work/terraform
+    working_dir: /work/terraform
     networks:
       - localstack-network
 
